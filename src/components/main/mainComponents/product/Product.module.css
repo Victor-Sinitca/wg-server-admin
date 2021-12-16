@@ -1,0 +1,59 @@
+
+.tableStyle{
+    border-collapse: collapse;
+    padding: 15px;
+    width: 100%;
+
+}
+.nameProduct{
+    width: 100%;
+    grid-column:1 / span 2;
+
+
+}
+.rowContainer{
+    border-top: darkblue solid 1px;
+    cursor: pointer;
+    min-height: 80px;
+}
+.productContainer{
+    margin: 20px;
+
+}
+.changeProductContainer{
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 120px;
+    background-color: aliceblue;
+    padding: 10px;
+
+}
+.firstContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 10px;
+}
+.descriptionContainer{
+    grid-column:1 / span 2;
+}
+.filterTechContainer{
+    grid-column:1 / span 2;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+.descriptionStyl{
+    max-height: 150px;
+}
+.imgContainer{
+    display: grid;
+    grid-template-columns: 150px 1fr;
+}
+.isSelect{
+    background-color: #a3d4a3;
+}
+.tableBody tr:nth-child(odd){
+    background-color: rgba(102, 54, 19, 0.25);
+}
+.tableHead tr th{
+    text-align: start;
+}

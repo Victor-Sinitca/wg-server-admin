@@ -1,0 +1,52 @@
+.displayNav{
+    display: grid;
+    grid-template-rows: min-content min-content;
+    grid-gap: 10px;
+
+}
+.displayFriend{
+    background-color: #a3d4a3;
+    border-radius: 10px;
+    padding: 10px;
+    grid-gap: 10px;
+    box-shadow:
+            0 0 5px rgba(101, 114, 126, 50),
+            0 0 10px rgba(140, 150, 170, 50),
+            0 0 15px rgb(83, 94, 104),
+            0 0 15px rgb(86, 96, 106);
+}
+.displayHeaderFriend{
+    display: grid;
+    grid-template-columns: 100px 1fr;
+}
+.nav {
+    background-color: #a3d4a3;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow:
+            0 0 5px rgba(101, 114, 126, 50),
+            0 0 10px rgba(140, 150, 170, 50),
+            0 0 15px rgb(83, 94, 104),
+            0 0 15px rgb(86, 96, 106);
+
+}
+.item a{
+    color: #012801;
+    font-size: 30px;
+    padding: 10px;
+    text-decoration:none;
+}
+.item a.active{
+    color: gold;
+}
+.friendsList{
+    display: grid;
+    padding-top: 10px;
+    grid-template-rows: auto;
+    grid-gap: 15px;
+}
+
+.displayUser{
+display: grid;
+
+}
