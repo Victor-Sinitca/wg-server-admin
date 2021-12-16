@@ -2,8 +2,12 @@ import React, {FC} from "react";
 import {Form, Formik, Field} from "formik";
 import {IProductData, TDiscount, TFilter} from "../../../../types/product";
 import {productAPI} from "../../../../apiBack/productApi";
-import s from "./AddProductStyle.module.css"
+import {TCountry, TTechnique, TTier} from "../../../../type/typeProductApi";
+import s from "./AddProductStyle.module.css";
 
+type AddProductType = {
+    isTech: boolean
+}
 
 interface IFilter {
     filter: {
@@ -41,22 +45,56 @@ interface IInitialValues {
     data: IProduct
 }
 
-export const AddProduct: FC<{}> = ({}) => {
-    const initialTechValues: IInitialValues = {
+
+interface IInitialTechValues {
+    filterModel: IFilter,
+    data: IProduct & {
+        filter: {
+            nation: TCountry;
+            type: TTechnique;
+            tier: TTier;
+        }
+    };
+}
+
+const country = [
+    'china',
+    'czech',
+    'france',
+    'germany',
+    'italy',
+    'japan',
+    'poland',
+    'sweden',
+    'uk',
+    'usa',
+    'ussr',]
+
+const tier = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+const technique = ['AT-SPG', 'heavyTank', 'lightTank', 'mediumTank', 'SPG'];
+
+
+export const AddProductTech: FC<{}> = ({}) => {
+    const initialTechValues: IInitialTechValues = {
         filterModel: {
             filter: {
                 Gold: false,
-                Premium: true,
+                Premium: false,
                 Provisions: false,
-                Technique: false
+                Technique: true
             },
             priority: 0,
             span: 1,
-            type: "Premium",
+            type: "Technique",
         },
         data: {
-            name: "Какой-то продукт",
+            name: "Какая-то техника",
             description: "Тут будет описание",
+            filter: {
+                nation: "ussr",
+                tier: "1",
+                type: "lightTank",
+            },
             price: {
                 basic: {
                     cost: "10",
@@ -67,11 +105,15 @@ export const AddProduct: FC<{}> = ({}) => {
                 },
             },
             images: {
-                span_1x1: "1111111",
-                span_2x1: "2222222",
+                span_1x1: "111",
+                span_2x1: "111",
             },
         }
     };
+    const nationSelect = country.map((c) => <option key={c} value={c}>{c}</option>)
+    const tierSelect = tier.map((c) => <option key={c} value={c}>{c}</option>)
+    const techniqueSelect = technique.map((c) => <option key={c} value={c}>{c}</option>)
+
     return <div>
         <Formik
             initialValues={initialTechValues}
@@ -98,9 +140,7 @@ export const AddProduct: FC<{}> = ({}) => {
                     <div>
                         <label htmlFor="type">Тип продукта</label>
                         <Field as="select" id="type" name="filterModel.type">
-                            <option value="Premium">Premium</option>
-                            <option value="Gold">Gold</option>
-                            <option value="Provisions">Provisions</option>
+                            <option value="Technique">Technique</option>
                         </Field>
                     </div>
                     <div>
@@ -123,6 +163,26 @@ export const AddProduct: FC<{}> = ({}) => {
                         <Field type="checkbox" id="Provisions" name="filterModel.filter.Provisions"/>
                         <label htmlFor="Technique">Technique</label>
                         <Field type="checkbox" id="Technique" name="filterModel.filter.Technique"/>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label htmlFor="nation">Страна</label>
+                        <Field as="select" id="nation" name="data.filter.nation">
+                            {nationSelect}
+                        </Field>
+                    </div>
+                    <div>
+                        <label htmlFor="tier">Уровень</label>
+                        <Field as="select" id="tier" name="data.filter.tier">
+                            {tierSelect}
+                        </Field>
+                    </div>
+                    <div>
+                        <label htmlFor="type">Тип</label>
+                        <Field as="select" id="type" name="data.filter.type">
+                            {techniqueSelect}
+                        </Field>
                     </div>
                 </div>
                 <div>

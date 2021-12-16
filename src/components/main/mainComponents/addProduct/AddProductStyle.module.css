@@ -1,0 +1,15 @@
+.formStyle{
+
+}
+
+
+.formStyle div{
+    padding: 5px;
+}
+.formStyle div div{
+     padding: 5px;
+}
+.formStyle label{
+     padding-right: 5px;
+    padding-left: 15px;
+}
