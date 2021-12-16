@@ -1,7 +1,7 @@
 .app{
   background-color: cornsilk;
   display: grid;
-  grid-template-columns: 180px 1fr;
+  grid-template-columns: 200px 1fr;
   grid-template-rows: 60px 1fr;
   height: 100%;
   width: 100vw;

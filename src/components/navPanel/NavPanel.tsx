@@ -17,6 +17,9 @@ export const NavPanel=()=>{
             <div className={`${s.item} ${s.active}`}>
                 <NavLink className={({ isActive }) => `${s.item} ${isActive? s.active :""}` } to="/provisions" >Provisions</NavLink>
             </div>
+            <div className={`${s.item} ${s.active}`}>
+                <NavLink className={({ isActive }) => `${s.item} ${isActive? s.active :""}` } to="/addProduct" >add Product</NavLink>
+            </div>
            {/* <div className={`${s.item} ${s.active}`}>
                 <NavLink className={({ isActive }) => `${s.item} ${isActive? s.active :""}` } to="/productsAdd" >Products add</NavLink>
             </div>*/}

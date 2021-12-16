@@ -7,13 +7,13 @@ import {TCountry, TTechnique, TTier} from "../../../../type/typeProductApi";
 
 type GoldRowType = {
     product: IProductFull
-    handlerChangedProduct:(oneProduct:IProductFull)=> void
+    handlerChangedProduct: (oneProduct: IProductFull) => void
 }
 
 const handlerSetChangedState = (product: IProductFull, chProduct: IProductFull,) => {
     return JSON.stringify(product) !== JSON.stringify(chProduct)
 }
-export const ProductRowContainer: FC<GoldRowType> = ({product,handlerChangedProduct}) => {
+export const ProductRowContainer: FC<GoldRowType> = ({product, handlerChangedProduct}) => {
     const [chProduct, setChProduct] = useState(product)
     const [isChanged, setIsChanged] = useState(false)
     const [hasBenHanged, setHasBenHanged] = useState(false)
@@ -34,7 +34,10 @@ export const ProductRowContainer: FC<GoldRowType> = ({product,handlerChangedProd
                 ...state,
                 data: {
                     ...state.data,
-                    price: {...state.data.price, actual: {...state.data.price.actual, discountType: e.target.value as TDiscount}}
+                    price: {
+                        ...state.data.price,
+                        actual: {...state.data.price.actual, discountType: e.target.value as TDiscount}
+                    }
                 }
             }
         })
@@ -52,17 +55,17 @@ export const ProductRowContainer: FC<GoldRowType> = ({product,handlerChangedProd
 
     const changeNationTech = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setChProduct((state) => {
-            return {...state, data: {...state.data,  filter:{...state.data.filter, nation: e.target.value as TCountry}}}
+            return {...state, data: {...state.data, filter: {...state.data.filter, nation: e.target.value as TCountry}}}
         })
     }
     const changeTypeTech = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setChProduct((state) => {
-            return {...state, data: {...state.data,  filter:{...state.data.filter, type: e.target.value as TTechnique}}}
+            return {...state, data: {...state.data, filter: {...state.data.filter, type: e.target.value as TTechnique}}}
         })
     }
     const changeTierTech = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setChProduct((state) => {
-            return {...state, data: {...state.data,  filter:{...state.data.filter, tier: e.target.value as TTier}}}
+            return {...state, data: {...state.data, filter: {...state.data.filter, tier: e.target.value as TTier}}}
         })
     }
 
@@ -125,27 +128,31 @@ export const ProductRowContainer: FC<GoldRowType> = ({product,handlerChangedProd
         }
     }
 
-    const nameChanged=chProduct.name !== product.name
-    const priorityChanged=chProduct.priority !== product.priority
-    const spanChanged=chProduct.span !== product.span
-    const discountTypeChanged=chProduct.data.price.actual.discountType !== product.data.price.actual.discountType
+    const nameChanged = chProduct.name !== product.name
+    const priorityChanged = chProduct.priority !== product.priority
+    const spanChanged = chProduct.span !== product.span
+    const discountTypeChanged = chProduct.data.price.actual.discountType !== product.data.price.actual.discountType
 
-    const basicCostChanged=chProduct.data.price.basic.cost !== product.data.price.basic.cost
-    const costChanged=chProduct.data.price.actual.cost !== product.data.price.actual.cost
-    const filterChanged=JSON.stringify(chProduct.filter) !== JSON.stringify(product.filter)
-    const descriptionChanged=chProduct.data.description !== product.data.description
-    const filterTechNationChanged=chProduct.data.filter?.nation !== product.data.filter?.nation
-    const filterTechTypeChanged=chProduct.data.filter?.type !== product.data.filter?.type
-    const filterTechTierChanged=chProduct.data.filter?.tier !== product.data.filter?.tier
-    const span_1x1Changed=chProduct.data.images.span_1x1 !== product.data.images.span_1x1
-    const span_2x1Changed=chProduct.data.images.span_2x1 !== product.data.images.span_2x1
+    const basicCostChanged = chProduct.data.price.basic.cost !== product.data.price.basic.cost
+    const costChanged = chProduct.data.price.actual.cost !== product.data.price.actual.cost
+    const filterChanged = JSON.stringify(chProduct.filter) !== JSON.stringify(product.filter)
+    const descriptionChanged = chProduct.data.description !== product.data.description
+    const filterTechNationChanged = chProduct.data.filter?.nation !== product.data.filter?.nation
+    const filterTechTypeChanged = chProduct.data.filter?.type !== product.data.filter?.type
+    const filterTechTierChanged = chProduct.data.filter?.tier !== product.data.filter?.tier
+    const span_1x1Changed = chProduct.data.images.span_1x1 !== product.data.images.span_1x1
+    const span_2x1Changed = chProduct.data.images.span_2x1 !== product.data.images.span_2x1
 
 
-    const sendNewProductData= async ()=>{
+    const sendNewProductData = async () => {
         const productData = await productAPI.changedProductById(chProduct)
-        if(productData){
+        if (productData) {
             handlerChangedProduct(productData.data)
         }
+    }
+
+    const deleteProduct = async ()=>{
+        await productAPI.deleteProductByID(chProduct.data.id)
     }
 
     useEffect(() => {
@@ -160,18 +167,18 @@ export const ProductRowContainer: FC<GoldRowType> = ({product,handlerChangedProd
             <td colSpan={9}>
                 <div className={s.changeProductContainer}>
                     <div className={s.firstContainer}>
-                        <div className={`${s.nameProduct} ${nameChanged? s.isSelect: ""}`}>
+                        <div className={`${s.nameProduct} ${nameChanged ? s.isSelect : ""}`}>
                             <label>Название:</label>
                             <textarea placeholder={"Название"} value={chProduct.name} onChange={changeName}/>
-                            {hasBenHanged?<button onClick={()=>setChProduct(product)}>resetAll</button>:""}
+                            {hasBenHanged ? <button onClick={() => setChProduct(product)}>resetAll</button> : ""}
                         </div>
                         <div>
-                            <div className={priorityChanged? s.isSelect: ""}>
+                            <div className={priorityChanged ? s.isSelect : ""}>
                                 <label>Приоритет:</label>
                                 <input type={"number"} min={0} max={100} value={chProduct.priority}
                                        onChange={changePriority}/>
                             </div>
-                            <div className={spanChanged? s.isSelect: ""}>
+                            <div className={spanChanged ? s.isSelect : ""}>
                                 <label htmlFor="size">Размер:</label>
                                 <select id="size" name="size" value={chProduct.span}
                                         onChange={changeSize}>
@@ -180,7 +187,7 @@ export const ProductRowContainer: FC<GoldRowType> = ({product,handlerChangedProd
                                 </select>
                             </div>
                         </div>
-                        <div className={discountTypeChanged? s.isSelect: ""}>
+                        <div className={discountTypeChanged ? s.isSelect : ""}>
                             <label htmlFor="typeDiscount">Тип скидки</label>
                             <select id="typeDiscount" name="discountType"
                                     value={chProduct.data.price.actual.discountType}
@@ -190,16 +197,16 @@ export const ProductRowContainer: FC<GoldRowType> = ({product,handlerChangedProd
                                 <option value="">нет</option>
                             </select>
                         </div>
-                        <div className={basicCostChanged? s.isSelect: ""}>
+                        <div className={basicCostChanged ? s.isSelect : ""}>
                             <label htmlFor="basicPrice">Базовая цена</label>
                             <input value={chProduct.data.price.basic.cost} onChange={changeBasicPrice}/>
                         </div>
-                        <div className={costChanged? s.isSelect: ""}>
+                        <div className={costChanged ? s.isSelect : ""}>
                             <label htmlFor="actualPrice">Актуальная цена</label>
                             <input value={chProduct.data.price.actual.cost} onChange={changeActualPrice}/>
                         </div>
                     </div>
-                    <div className={filterChanged? s.isSelect: ""}>
+                    <div className={filterChanged ? s.isSelect : ""}>
                         <label htmlFor="actualPrice">Фильтр</label>
                         <div>
                             <div>
@@ -225,7 +232,7 @@ export const ProductRowContainer: FC<GoldRowType> = ({product,handlerChangedProd
                         </div>
                     </div>
                     {chProduct.data.filter && <div className={s.filterTechContainer}>
-                        <div className={filterTechNationChanged? s.isSelect: ""}>
+                        <div className={filterTechNationChanged ? s.isSelect : ""}>
                             <label htmlFor="nation">Нация</label>
                             <select id="nation" name="nation"
                                     value={chProduct.data.filter.nation}
@@ -243,7 +250,7 @@ export const ProductRowContainer: FC<GoldRowType> = ({product,handlerChangedProd
                                 <option value="ussr">ссср</option>
                             </select>
                         </div>
-                        <div className={filterTechTypeChanged? s.isSelect: ""}>
+                        <div className={filterTechTypeChanged ? s.isSelect : ""}>
                             <label htmlFor="typeTech">Тип</label>
                             <select id="typeTech" name="type"
                                     value={chProduct.data.filter.type}
@@ -255,7 +262,7 @@ export const ProductRowContainer: FC<GoldRowType> = ({product,handlerChangedProd
                                 <option value="SPG">арта</option>
                             </select>
                         </div>
-                        <div className={filterTechTierChanged? s.isSelect: ""}>
+                        <div className={filterTechTierChanged ? s.isSelect : ""}>
                             <label id="tierTech">Уровень</label>
                             <select id="tierTech" name="tier"
                                     value={chProduct.data.filter.tier}
@@ -276,17 +283,22 @@ export const ProductRowContainer: FC<GoldRowType> = ({product,handlerChangedProd
 
                     </div>}
                     <div className={s.descriptionContainer}>
-                        <div className={`${s.imgContainer} ${descriptionChanged? s.isSelect : ""}`}>
+                        <div className={`${s.imgContainer} ${descriptionChanged ? s.isSelect : ""}`}>
                             <label>Описание</label>
                             <textarea className={s.descriptionStyl} value={chProduct.data.description}
                                       onChange={changeDescription}/>
                         </div>
                         <div className={s.imgContainer}>
                             <label>Изображение 1*1</label>
-                            <textarea className={span_1x1Changed? s.isSelect: ""} value={chProduct.data.images.span_1x1} onChange={changeImg1x1}/>
+                            <textarea className={span_1x1Changed ? s.isSelect : ""}
+                                      value={chProduct.data.images.span_1x1} onChange={changeImg1x1}/>
                             <label>Изображение 1*2</label>
-                            <textarea className={span_2x1Changed? s.isSelect: ""} value={chProduct.data.images.span_2x1} onChange={changeImg1x2}/>
+                            <textarea className={span_2x1Changed ? s.isSelect : ""}
+                                      value={chProduct.data.images.span_2x1} onChange={changeImg1x2}/>
                         </div>
+                    </div>
+                    <div>
+                        <button onClick={deleteProduct}>!!!!УДАЛИТЬ ПРОДУКТ!!!</button>
                     </div>
                 </div>
             </td>

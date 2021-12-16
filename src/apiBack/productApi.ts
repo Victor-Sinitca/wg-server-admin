@@ -8,6 +8,10 @@ export const productAPI = {
         return instance.get<genRespType<IProduct>>(`/product?id=${id}`)
             .then(response => response.data)
     },
+    deleteProductByID(id: string) {
+        return instance.get<genRespType<IProduct>>(`/deleteProduct?id=${id}`)
+            .then(response => response.data)
+    },
     getProductsByFilter(filter: string) {
         return instance.get<genRespType<IProduct[]>>(`/product/filter?filter=${filter}`)
             .then(response => response.data)
@@ -24,6 +28,11 @@ export const productAPI = {
     addProductsByTech(listProducts: TechniqueDatType[], type:string) {
         return instance.post<genRespType<any>>('/addProductsTech', {
             data: listProducts, type
+        }).then(response => response.data)
+    },
+    addOneProduct(data:any) {
+        return instance.post<genRespType<any>>('/productAdmin', {
+            data:data.data, filterData:data.filterModel
         }).then(response => response.data)
     },
     changedProductById(data:IProductFull) {
