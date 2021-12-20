@@ -1,6 +1,6 @@
 import React, {FC} from "react";
-import {Form, Formik, Field} from "formik";
-import {IProductData, TDiscount, TFilter} from "../../../../types/product";
+import {Field, Form, Formik} from "formik";
+import {TDiscount, TFilter} from "../../../../types/product";
 import {productAPI} from "../../../../apiBack/productApi";
 import s from "./AddProductStyle.module.css"
 
@@ -128,11 +128,11 @@ export const AddProduct: FC<{}> = ({}) => {
                 <div>
                     <div>
                         <label htmlFor="firstName">Имя</label>
-                        <Field id="firstName" name="data.name" placeholder="First Name"/>
+                        <Field as="textarea"  id="firstName" name="data.name" placeholder="First Name"/>
                     </div>
                     <div>
                         <label htmlFor="firstName">Описание</label>
-                        <Field id="firstName" name="data.description" placeholder="First Name"/>
+                        <Field as="textarea" id="firstName" name="data.description" placeholder="First Name"/>
                     </div>
                     <div>
                         <label htmlFor="firstName">Базовая цена</label>
@@ -143,16 +143,20 @@ export const AddProduct: FC<{}> = ({}) => {
                         <Field id="firstName" name="data.price.actual.cost" placeholder="First Name"/>
                     </div>
                     <div>
-                        <label htmlFor="firstName">Тип скидки</label>
-                        <Field id="firstName" name="data.price.actual.discountType" placeholder="First Name"/>
+                        <label htmlFor="discountType">Тип скидки</label>
+                        <Field as="select" id="discountType" name="data.price.actual.discountType">
+                            <option value="percent">процент</option>
+                            <option value="fixed">фиксировано</option>
+                            <option value="">нет</option>
+                        </Field>
                     </div>
                     <div>
                         <label htmlFor="firstName">картинка 1</label>
-                        <Field id="firstName" name="data.images.span_1x1" placeholder="First Name"/>
+                        <Field as="textarea"  id="firstName" name="data.images.span_1x1" placeholder="First Name"/>
                     </div>
                     <div>
                         <label htmlFor="firstName">картинка 2</label>
-                        <Field id="firstName" name="data.images.span_2x1" placeholder="First Name"/>
+                        <Field as="textarea"  id="firstName" name="data.images.span_2x1" placeholder="First Name"/>
                     </div>
                     <div>
                         <button type="submit">Submit</button>

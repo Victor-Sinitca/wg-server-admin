@@ -14,5 +14,6 @@ export default defineConfig({
         },
     },*/
     base: process.env.NODE_ENV === 'production' ? '/wg-server-admin/' : './',
+/*    base: '/wg-server-admin/',*/
 
 })

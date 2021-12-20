@@ -2,7 +2,7 @@
   "name": "vite-project",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --base /wg-server-admin/",
     "build": "tsc && vite build ",
     "preview": "vite preview",
     "serve": "vite preview",
